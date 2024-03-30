@@ -2,13 +2,13 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { YourContract } from "../typechain-types";
 
-describe("YourContract", function () {
+describe("SoulBoundTest", function () {
   // We define a fixture to reuse the same setup in every test.
 
   let yourContract: YourContract;
   before(async () => {
     const [owner] = await ethers.getSigners();
-    const yourContractFactory = await ethers.getContractFactory("YourContract");
+    const yourContractFactory = await ethers.getContractFactory("");
     yourContract = (await yourContractFactory.deploy(owner.address)) as YourContract;
     await yourContract.waitForDeployment();
   });

@@ -1,4 +1,49 @@
+import { defineChain } from "viem";
 import * as chains from "viem/chains";
+
+const zkevmCardona = defineChain({
+  id: 2442,
+  name: "Polygon zkEVM Cardona Testnet",
+  network: "polygon-zkevm-cardona-testnet",
+  nativeCurrency: {
+    decimals: 18,
+    name: "Ether",
+    symbol: "ETH",
+  },
+  rpcUrls: {
+    default: {
+      http: ["https://rpc.cardona.zkevm-rpc.com"],
+    },
+    public: {
+      http: ["https://rpc.cardona.zkevm-rpc.com"],
+    },
+  },
+  blockExplorers: {
+    default: { name: "Explorer", url: "https://cardona-zkevm.polygonscan.com/" },
+  },
+});
+
+const polygonMumbai = defineChain({
+  id: 80001,
+  name: "Polygon Mumbai (Alchemy)",
+  network: "polygon-mumbai",
+  nativeCurrency: {
+    decimals: 18,
+    name: "Ether",
+    symbol: "ETH",
+  },
+  rpcUrls: {
+    default: {
+      http: ["https://polygon-mumbai.g.alchemy.com/v2/7zhiF2LgPiX_2CDpozmcEHcdbtl0pERZ"],
+    },
+    public: {
+      http: ["https://polygon-mumbai.g.alchemy.com/v2/7zhiF2LgPiX_2CDpozmcEHcdbtl0pERZ"],
+    },
+  },
+  blockExplorers: {
+    default: { name: "Explorer", url: "https://mumbai.polygonscan.com" },
+  },
+});
 
 export type ScaffoldConfig = {
   targetNetworks: readonly chains.Chain[];
@@ -11,7 +56,7 @@ export type ScaffoldConfig = {
 
 const scaffoldConfig = {
   // The networks on which your DApp is live
-  targetNetworks: [chains.hardhat],
+  targetNetworks: [polygonMumbai, zkevmCardona],
 
   // The interval at which your front-end polls the RPC servers for new data
   // it has no effect if you only target the local network (default is 4000)
