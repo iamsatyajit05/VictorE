@@ -32,6 +32,7 @@ const Page = ({ params }: { params: { address: string } }) => {
           address={item.mint.mintAddress}
           time={item.mint.timestamp}
           img={item.image.originalUrl}
+          id={item.tokenId}
         />
       ))}
       {wins.length === 0 && <div className="text-center mt-10">No NFTs found</div>}

@@ -4,7 +4,14 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['ipfs.io'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'ipfs.io',
+        port: '',
+        pathname: '/*',
+      },
+    ],
   },
   typescript: {
     ignoreBuildErrors: process.env.NEXT_PUBLIC_IGNORE_BUILD_ERROR === "true",

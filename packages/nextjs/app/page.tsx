@@ -34,6 +34,7 @@ const Posts = () => {
           address={item.mint.mintAddress}
           time={item.mint.timestamp}
           img={item.image.originalUrl}
+          id={item.tokenId}
         />
       ))}
     </div>

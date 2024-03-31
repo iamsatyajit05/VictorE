@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import Link from "next/link";
 import { ABI, smartContractAddress } from "./ABI";
-import { useAccount, useContractWrite } from "wagmi";
+import { useAccount, useContractWrite, useWaitForTransaction } from "wagmi";
 import { PhotoIcon } from "@heroicons/react/24/outline";
 
 const API_TOKEN =
@@ -13,7 +13,7 @@ const NewPost = () => {
   const [imageURL, setImageURL] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [showImage, setShowImage] = useState(false);
-  const { isLoading, isSuccess, write } = useContractWrite({
+  const { data, isLoading, isSuccess, writeAsync } = useContractWrite({
     address: smartContractAddress,
     abi: ABI,
     functionName: "safeMint",
@@ -82,16 +82,17 @@ const NewPost = () => {
       const to = address;
       const uri = "https://apricot-legal-salamander-530.mypinata.cloud/ipfs/" + resDataJSON.IpfsHash;
 
-      const resMint = await write({
+      await writeAsync({
         args: [to, uri],
       });
 
-      console.log("MINT", resMint);
-
+      console.log("MINT", data);
+      
       document.getElementById("my_modal_1").showModal();
     } catch (error) {
       console.log(error);
     } finally {
+
       setUploading(false);
     }
   };
@@ -145,32 +146,18 @@ const NewPost = () => {
           </button>
         </div>
       </form>
-      {isSuccess && (
+      {/* {isSuccess && ( */}
         <dialog id="my_modal_1" className="modal">
           <div className="modal-box">
             <h3 className="font-bold text-lg">Your Achievement is Minted 🎉</h3>
-            <p className="">
-              You can check your NFT{" "}
-              <Link href="#" className="underline">
-                here 🔗
-              </Link>
-            </p>
-            <p className="">
-              Share your achievement to the world,{" "}
-              <Link href="#" className="underline">
-                Whatsapp
-              </Link>{" "}
-              or{" "}
-              <Link href="#" className="underline">
-                Twitter
-              </Link>
-            </p>
+            <p>Your can check your NFT on OpenSea, or share it on Whatsapp / Twitter.</p>
+            <p>Link are avaible next to card, try refresing the app.</p>
           </div>
           <form method="dialog" className="modal-backdrop">
             <button>close</button>
           </form>
         </dialog>
-      )}
+      {/* )} */}
     </div>
   );
 };
